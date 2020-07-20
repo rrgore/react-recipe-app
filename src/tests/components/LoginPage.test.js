@@ -40,14 +40,13 @@ xit('Should render Login button correctly', () => {
 
 it('Should not render error msg div', () => {
     const wrapper = shallow(<LoginPage />);
-    console.log(wrapper.find('#errorMsg').props());
     expect(wrapper.find('#errorMsg').props()).toHaveProperty('hidden');
     wrapper.unmount();
 });
 
 it('When user clicks login without filling fields -> Error msg above all the fields', () => {
-    const wrapper = shallow(<LoginPage />);
-    wrapper.find('#login').simulate('click');
+    const wrapper = mount(<LoginPage />);
+    wrapper.find('#login').simulate('submit');
     expect(wrapper.find('#errorMsg').props()).not.toHaveProperty('hidden');
     expect(wrapper.find('#errorMsg').text()).toBe("The username and password fields cannot be empty");
     wrapper.unmount();
