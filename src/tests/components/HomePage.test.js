@@ -4,7 +4,7 @@ import HomePage from '../../components/HomePage';
 import App from '../../components/App';
 import { MemoryRouter } from 'react-router';
 
-xit('Should show Home component for / router', () => {
+it('Should show Home component for / router', () => {
     const wrapper = mount(
         <MemoryRouter initialEntries={['/']}>
             <App />
@@ -14,25 +14,25 @@ xit('Should show Home component for / router', () => {
     wrapper.unmount();
 });
 
-xit('Should render Home page title correctly', () => {
+it('Should render Home page title correctly', () => {
     const wrapper = shallow(<HomePage />);
     expect(wrapper.find('#recipeAppTitle').text()).toBe('Recipe App');
     wrapper.unmount();
 });
 
-xit('Should render Signup button correctly', () => {
+it('Should render Signup button correctly', () => {
     const wrapper = shallow(<HomePage />);
     expect(wrapper.find('#signUp')).toHaveLength(1);
     wrapper.unmount();
 });
 
-xit('Should render Login button correctly', () => {
+it('Should render Login button correctly', () => {
     const wrapper = shallow(<HomePage />);
     expect(wrapper.find('#login')).toHaveLength(1);
     wrapper.unmount();
 });
 
-xit('Should render Pre Login String correctly', () => {
+it('Should render Pre Login String correctly', () => {
     const wrapper = shallow(<HomePage />);
     expect(wrapper.find('#preLoginString').text()).toBe('Add and see your recipes, along with the ingredients and tags');
     wrapper.unmount();

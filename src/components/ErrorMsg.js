@@ -6,7 +6,6 @@ const ErrorMsg = () => (
             id="errorMsg" 
             className="errorMsg" 
             name="errorMsg" 
-            hidden
         >The username and password fields cannot be empty</p>
     </div>
 );
