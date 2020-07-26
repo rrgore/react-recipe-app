@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const API_TOKEN_URL = 'http://192.168.0.101:8000/api/user/token/';
+
 const LoginForm = (props) => {
     const [email, setEmail] = useState( '' );
     const [password, setPassword] = useState( '' );
@@ -8,9 +10,27 @@ const LoginForm = (props) => {
         e.preventDefault();
 
         if( email !== '' && password !== '' ) {
-            // console.log( `${email}; ${password}` );
-        }
-        return props.onError( true );
+            // Fetch token
+            const init = {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    'email': email,
+                    'password': password
+                }
+            }
+            fetch( API_TOKEN_URL, init )
+                .then( data => {
+                    console.log( data.json() );
+                }, errors => {
+                    console.log( errors );
+                });
+        } else {
+            return props.onError( true );
+        }        
     }
 
     const handleClick = () => props.onError( false );
