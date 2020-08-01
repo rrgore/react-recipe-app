@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const AccountPanel = () => {
-    const {userLoggedIn, setUserLoggedIn} = useState( false );
+const AccountPanel = (props) => {
+
+    const handleLogout = () => {
+        return props.setUserToken('');
+    }
 
     return (
         <div>
-            { !userLoggedIn ? 
+            { !props.userLoggedIn ? 
                 <div>
                     <Link 
                         to="/signUp" 
@@ -33,10 +36,11 @@ const AccountPanel = () => {
                     </Link> 
                     <br />
                     <Link 
-                        to="/logout" 
+                        to="/" 
                         id="logout" 
                         className="logout" 
                         name="logout"
+                        onClick={handleLogout}
                     >Logout</Link>
                 </div>                
             }

@@ -1475,6 +1475,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.7.6":
+  version: 7.11.0
+  resolution: "@babel/runtime@npm:7.11.0"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 212e99737b26f7f0b5bd552dcfddccd82f1bcb61e3f564afb82b9cb61b72d613ae8c18c6f7006729e4ab3c4ab2b821f86c1f324033199c03936cfa9c0d413a5e
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.9.2, @babel/runtime@npm:^7.9.6":
   version: 7.10.5
   resolution: "@babel/runtime@npm:7.10.5"
@@ -7089,6 +7098,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"history@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "history@npm:5.0.0"
+  dependencies:
+    "@babel/runtime": ^7.7.6
+  checksum: 38a8af6f31a08ddfd6b404fa6df2fcca8bd91300aa0858bdd2bf314aca0516bd37f9835c1f628e4a9113c1be4145d8e7c58f225564d8e9708a0f49c217acb47a
+  languageName: node
+  linkType: hard
+
 "hmac-drbg@npm:^1.0.0":
   version: 1.0.1
   resolution: "hmac-drbg@npm:1.0.1"
@@ -12270,6 +12288,7 @@ fsevents@~2.1.2:
     enzyme-adapter-react-16: 1.7.1
     eslint: ^7.0.0
     eslint-plugin-jest-dom: ^3.1.4
+    history: ^5.0.0
     raf: 3.3.2
     react: ^16.13.1
     react-dom: ^16.13.1

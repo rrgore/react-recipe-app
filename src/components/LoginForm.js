@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
-const API_TOKEN_URL = 'http://192.168.0.101:8000/api/user/token/';
+import { API_URL } from '../utils/ServerUtils';
+
+
+const API_TOKEN_URL = `${API_URL}/api/user/token/`;
 
 const LoginForm = (props) => {
     const [email, setEmail] = useState( '' );
@@ -10,24 +13,14 @@ const LoginForm = (props) => {
         e.preventDefault();
 
         if( email !== '' && password !== '' ) {
-            // Fetch token
-            const init = {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: {
-                    'email': email,
-                    'password': password
+            postLoginData({
+                'email': email,
+                'password': password
+            }).then( data => {
+                if( data && data.token && data.token !== '' ) {
+                    return props.onLoginSuccess( data.token );
                 }
-            }
-            fetch( API_TOKEN_URL, init )
-                .then( data => {
-                    console.log( data.json() );
-                }, errors => {
-                    console.log( errors );
-                });
+            });
         } else {
             return props.onError( true );
         }        
@@ -38,6 +31,18 @@ const LoginForm = (props) => {
     const handleEmailChange = ( event ) => setEmail( event.target.value );
 
     const handlePasswordChange = ( event ) => setPassword( event.target.value );
+
+    async function postLoginData( data = {} ) {
+        const response = await fetch(API_TOKEN_URL, {
+            method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+        });
+        return response.json();
+    };
 
     return (
         <div>

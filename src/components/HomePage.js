@@ -1,13 +1,34 @@
-import React from 'react';
-import AccountPanel from './AccountPanel';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const HomePage = () => {
+import AccountPanel from './AccountPanel';
+import PreLoginMsg from './PreLoginMsg';
+import ContentPanel from './ContentPanel';
+
+
+const HomePage = (props) => {
+    /** State hooks */
+    const [userToken, setUserToken] = useState('');
+
+    /** React router history object */
+    const history = useHistory();
+
+    useEffect(() => {
+        // console.log( history );
+        if( history.location.state && history.location.state.userToken ) {
+            // console.log( history.location.state.userToken );
+            setUserToken( history.location.state.userToken );
+        }
+    }, [history.location.state]);
+
+    const userLoggedIn = () => ( userToken && userToken !== '' );
+
     return (
         <div>
             <h1 id="recipeAppTitle" className="recipeAppTitle" name="recipeAppTitle">Recipe App</h1>
-            <AccountPanel />
+            <AccountPanel userLoggedIn={userLoggedIn()} setUserToken={setUserToken} />
             <hr />
-            <p id="preLoginString" className="preLoginString" name="preLoginString">Add and see your recipes, along with the ingredients and tags</p>
+            { userLoggedIn() ? <ContentPanel userToken={userToken} /> : <PreLoginMsg /> }
         </div>
     );
 }
