@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Switch,
   Route
@@ -9,10 +9,13 @@ import LoginPage from './LoginPage';
 import RecipesPage from './RecipesPage';
 import TagsPage from './TagsPage';
 import IngredientsPage from './IngredientsPage';
+import UserContext from '../utils/UserContext';
 
 
 function App() {
+  const userToken = useState('');
   return (
+    <UserContext.Provider value={userToken}>
       <Switch>
         <Route exact path="/">
           <HomePage />
@@ -30,6 +33,7 @@ function App() {
           <IngredientsPage />
         </Route>
       </Switch>
+    </UserContext.Provider>      
   );
 }
 

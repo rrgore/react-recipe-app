@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import UserContext from '../utils/UserContext';
+
+
 const AccountPanel = (props) => {
+    const [userToken, setUserToken] = useContext( UserContext );
 
     const handleLogout = () => {
-        return props.setUserToken('');
+        setUserToken('');
     }
 
     return (
         <div>
-            { !props.userLoggedIn ? 
+            { userToken === '' ? 
                 <div>
                     <Link 
                         to="/signUp" 

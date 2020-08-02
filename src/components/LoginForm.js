@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { 
+    useState,
+    useContext
+} from 'react';
 
 import { API_URL } from '../utils/ServerUtils';
+import UserContext from '../utils/UserContext';
 
 
 const API_TOKEN_URL = `${API_URL}/api/user/token/`;
@@ -8,6 +12,8 @@ const API_TOKEN_URL = `${API_URL}/api/user/token/`;
 const LoginForm = (props) => {
     const [email, setEmail] = useState( '' );
     const [password, setPassword] = useState( '' );
+
+    const [userToken, setUserToken] = useContext( UserContext );
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,7 +24,8 @@ const LoginForm = (props) => {
                 'password': password
             }).then( data => {
                 if( data && data.token && data.token !== '' ) {
-                    return props.onLoginSuccess( data.token );
+                    setUserToken( data.token );
+                    history.push("/");
                 }
             });
         } else {

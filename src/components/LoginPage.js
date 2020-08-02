@@ -8,17 +8,15 @@ const LoginPage = () => {
     const [displayErrorMsg, setDisplayErrorMsg] = useState( false );
 
     /** React history object */
-    const history = useHistory();
+    // const history = useHistory();
 
     /** Event handling methods */
     const onError = ( value ) => setDisplayErrorMsg( value );
 
-    const onLoginSuccess = ( value ) => {
-        // console.log( value );
-        history.push("/", {
-            userToken: value
-        });
-    }
+    // const onLoginSuccess = () => {
+    //     // console.log( value );
+        
+    // }
 
     return (
         <div>
@@ -26,7 +24,7 @@ const LoginPage = () => {
             <hr />
             
             { displayErrorMsg ? <ErrorMsg /> : null }
-            <LoginForm onError={onError} onLoginSuccess={onLoginSuccess}/>
+            <LoginForm onError={onError}/>
         </div>
     );
 }
