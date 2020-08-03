@@ -1,10 +1,12 @@
 import React, { 
     useState,
-    useContext
 } from 'react';
+import { useHistory } from 'react-router-dom';
+import {
+    Form
+} from 'semantic-ui-react';
 
 import { API_URL } from '../utils/ServerUtils';
-import UserContext from '../utils/UserContext';
 
 
 const API_TOKEN_URL = `${API_URL}/api/user/token/`;
@@ -12,8 +14,10 @@ const API_TOKEN_URL = `${API_URL}/api/user/token/`;
 const LoginForm = (props) => {
     const [email, setEmail] = useState( '' );
     const [password, setPassword] = useState( '' );
+    // const [userToken, setUserToken] = useContext( UserContext );
+    const history = useHistory();
 
-    const [userToken, setUserToken] = useContext( UserContext );
+    // let userToken = '';
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,7 +28,8 @@ const LoginForm = (props) => {
                 'password': password
             }).then( data => {
                 if( data && data.token && data.token !== '' ) {
-                    setUserToken( data.token );
+                    // setUserToken( data.token );
+                    sessionStorage.setItem( 'token', data.token );
                     history.push("/");
                 }
             });
@@ -53,37 +58,36 @@ const LoginForm = (props) => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <input 
+            <Form onSubmit={handleSubmit}>
+                <Form.Input 
                     type="text" 
                     id="email" 
                     className="email" 
                     name="email" 
+                    label="Email"
                     placeholder="Email"
                     onClick={handleClick}
                     onChange={handleEmailChange}
                 />
-                <br />
-
-                <input 
+                <Form.Input 
                     type="password" 
                     id="password" 
                     className="password" 
                     name="password" 
+                    label="Password"
                     placeholder="Password"
                     onClick={handleClick}
                     onChange={handlePasswordChange}
                 />
-                <br />
-
-                <input 
+                <Form.Button 
+                    primary
                     type="submit" 
                     id="login" 
                     className="login" 
                     name="login" 
                     value="Login"
-                />
-            </form>
+                >Login</Form.Button>
+            </Form>
         </div>        
     );
 }

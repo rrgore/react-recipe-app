@@ -1,11 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+    Card,
+    Icon
+} from 'semantic-ui-react';
 
 
 const ContentPanel = ( props ) => {
     return (
         <div>
-            <h3> This is content panel </h3>
+            <Card>
+                <Card.Content>
+                    Recipes
+                </Card.Content>
+            </Card>
+            <Card>
+                <Card.Content>
+                    Tags
+                </Card.Content>
+            </Card>
+            <Card>
+                <Card.Content>
+                    Ingredients
+                </Card.Content>
+            </Card>
             <Link 
                 to={{
                     pathname: "/recipes",

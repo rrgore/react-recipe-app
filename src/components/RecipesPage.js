@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { 
+    useState, 
+    useEffect,
+ } from 'react';
 
 import { API_URL } from '../utils/ServerUtils';
 import PartialRecipeItem from './PartialRecipeItem';
@@ -10,19 +12,22 @@ const API_GET_RECIPES_URL = `${API_URL}/api/recipe/recipes`;
 const RecipesPage = ( props ) => {
     const [recipesList, setRecipesList] = useState( [] );
 
-    const userToken = useContext( UserContext )[0];
-    // const location = useLocation();
-
     useEffect(() => {
-        // console.log( location );
-        if( userToken !== '' ) {
-            getRecipesData( userToken )
+        let mounted = true;
+        let token = sessionStorage.getItem('token');
+        if( token && token !== '' ) {
+            getRecipesData( token )
                 .then( data => {
-                    // console.log( data );
-                    setRecipesList( data );
+                    if( mounted ) {
+                        setRecipesList( data );
+                    }
                 });
         }
-    }, [userToken]);
+
+        return (() => { 
+            mounted = false;
+        });
+    });
 
     async function getRecipesData( userToken ) {
         const headerObject = {

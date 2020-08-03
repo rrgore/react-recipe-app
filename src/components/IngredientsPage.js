@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { 
+    useState, 
+    useEffect,
+ } from 'react';
 
 import { API_URL } from '../utils/ServerUtils';
 import IngredientItem from './IngredientItem';
@@ -10,19 +12,22 @@ const API_GET_INGREDIENTS_URL = `${API_URL}/api/recipe/ingredients`;
 const IngredientsPage = ( props ) => {
     const [ingredientsList, setIngredientsList] = useState( [] );
 
-    const userToken = useContext( UserContext )[0];
-    // const location = useLocation();
-
     useEffect(() => {
-        // console.log( location );
-        if( userToken !== '' ) {
-            getIngredientsData( userToken )
+        let mounted = true;
+        let token = sessionStorage.getItem('token');
+        if( token && token !== '' ) {
+            getIngredientsData( token )
                 .then( data => {
-                    // console.log( data );
-                    setIngredientsList( data );
+                    if( mounted ) {
+                        setIngredientsList( data );
+                    }
                 });
         }
-    }, [userToken]);
+
+        return (() => { 
+            mounted = false;
+        });
+    });
 
     async function getIngredientsData( userToken ) {
         const headerObject = {

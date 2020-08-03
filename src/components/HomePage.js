@@ -1,40 +1,39 @@
 import React, { 
-    useState, 
-    useEffect, 
-    useContext 
+    useEffect,
+    useState
 } from 'react';
-import { useHistory } from 'react-router-dom';
+import {  
+    Header
+} from 'semantic-ui-react';
 
 import AccountPanel from './AccountPanel';
 import PreLoginMsg from './PreLoginMsg';
 import ContentPanel from './ContentPanel';
-import UserContext from '../utils/UserContext';
 
 
 const HomePage = (props) => {
-    const userToken = useContext( UserContext )[0];
-
     /** State hooks */
-    // const [userToken, setUserToken] = useState('');
+    const [userToken, setUserToken] = useState('');
 
-    /** React router history object */
-    // const history = useHistory();
-
-    // useEffect(() => {
-    //     // console.log( history );
-    //     if( history.location.state && history.location.state.userToken ) {
-    //         // console.log( history.location.state.userToken );
-    //         setUserToken( history.location.state.userToken );
-    //     }
-    // }, [history.location.state]);
+    useEffect(() => {        
+        const token = sessionStorage.getItem('token');
+        if( token && token !== '' ) {
+            setUserToken( token );
+        }
+    }, [userToken])
 
     const userLoggedIn = () => ( userToken && userToken !== '' );
 
     return (
         <div>
-            <h1 id="recipeAppTitle" className="recipeAppTitle" name="recipeAppTitle">Recipe App</h1>
-            <AccountPanel />
-            <hr />
+            <Header 
+                as='h1' 
+                content='Recipe App'
+                id="recipeAppTitle" 
+                className="recipeAppTitle" 
+                name="recipeAppTitle"
+            />
+            <AccountPanel setToken={setUserToken}/>
             { userLoggedIn() ? <ContentPanel /> : <PreLoginMsg /> }
         </div>
     );

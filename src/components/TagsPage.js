@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { 
+    useState, 
+    useEffect,
+ } from 'react';
 
 import { API_URL } from '../utils/ServerUtils';
 import TagItem from './TagItem';
-import UserContext from '../utils/UserContext';
 
 
 const API_GET_TAGS_URL = `${API_URL}/api/recipe/tags`;
@@ -11,19 +12,22 @@ const API_GET_TAGS_URL = `${API_URL}/api/recipe/tags`;
 const TagsPage = ( props ) => {
     const [tagsList, setTagsList] = useState( [] );
 
-    const userToken = useContext( UserContext )[0];
-    // const location = useLocation();
-
     useEffect(() => {
-        // console.log( location );
-        if( userToken !== '' ) {
-            getTagsData( userToken )
+        let mounted = true;
+        let token = sessionStorage.getItem('token');
+        if( token && token !== '' ) {
+            getTagsData( token )
                 .then( data => {
-                    // console.log( data );
-                    setTagsList( data );
+                    if( mounted ) {
+                        setTagsList( data );
+                    }                    
                 });
         }
-    }, [userToken]);
+
+        return (() => { 
+            mounted = false;
+        });
+    });
 
     async function getTagsData( userToken ) {
         const headerObject = {
