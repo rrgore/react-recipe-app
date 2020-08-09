@@ -2,9 +2,10 @@ import React, {
     useState, 
     useEffect,
  } from 'react';
+import { List } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import { API_URL } from '../utils/ServerUtils';
-import PartialRecipeItem from './PartialRecipeItem';
 
 
 const API_GET_RECIPES_URL = `${API_URL}/api/recipe/recipes`;
@@ -44,11 +45,20 @@ const RecipesPage = ( props ) => {
     return (
         <div>
             <h1>Recipes Page</h1>
-            {
-                recipesList.length > 0 ? recipesList.map( recipe => (
-                    <PartialRecipeItem recipeData={recipe} key={recipe.id} />
-                )) : null
-            }
+            <Link to='/'>Go to Home Page</Link>
+            <List animated>
+                {
+                    recipesList.length > 0 ? recipesList.map( recipe => (
+                        <List.Item key={recipe.id}>
+                            <List.Icon name='food' size='large' verticalAlign='middle' />
+                            <List.Content>
+                                <List.Header>{recipe.title}</List.Header>
+                                <List.Description as={Link} to={{ pathname: `/recipe/${recipe.id}` }}>See Full Recipe</List.Description>
+                            </List.Content>
+                        </List.Item>
+                    )): null
+                }
+            </List>
         </div>
     );
 }

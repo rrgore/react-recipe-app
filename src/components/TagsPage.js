@@ -2,9 +2,11 @@ import React, {
     useState, 
     useEffect,
  } from 'react';
+import { List } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import { API_URL } from '../utils/ServerUtils';
-import TagItem from './TagItem';
+// import TagItem from './TagItem';
 
 
 const API_GET_TAGS_URL = `${API_URL}/api/recipe/tags`;
@@ -44,11 +46,19 @@ const TagsPage = ( props ) => {
     return (
         <div>
             <h1>Tags Page</h1>
-            {
-                tagsList.length > 0 ? tagsList.map( tag => (
-                    <TagItem tagData={tag} key={tag.id} />
-                )) : null
-            }
+            <Link to='/'>Go to Home Page</Link>
+            <List animated>
+                {
+                    tagsList.length > 0 ? tagsList.map( tag => (
+                        <List.Item key={tag.id}>
+                            <List.Icon name='tags' size='large' verticalAlign='middle' />
+                            <List.Content>
+                                <List.Header>{tag.name}</List.Header>
+                            </List.Content>
+                        </List.Item>
+                    )): null
+                }
+            </List>
         </div>
     );
 }

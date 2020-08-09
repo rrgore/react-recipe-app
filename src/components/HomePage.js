@@ -15,12 +15,13 @@ const HomePage = (props) => {
     /** State hooks */
     const [userToken, setUserToken] = useState('');
 
+    /** Component mount hook */
     useEffect(() => {        
         const token = sessionStorage.getItem('token');
         if( token && token !== '' ) {
             setUserToken( token );
         }
-    }, [userToken])
+    }, [userToken]);
 
     const userLoggedIn = () => ( userToken && userToken !== '' );
 
@@ -33,7 +34,12 @@ const HomePage = (props) => {
                 className="recipeAppTitle" 
                 name="recipeAppTitle"
             />
-            <AccountPanel setToken={setUserToken}/>
+            <AccountPanel
+                id="accountPanel" 
+                className="accountPanel" 
+                name="accountPanel"
+                setToken={setUserToken}
+            />
             { userLoggedIn() ? <ContentPanel /> : <PreLoginMsg /> }
         </div>
     );

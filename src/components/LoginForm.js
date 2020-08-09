@@ -27,18 +27,33 @@ const LoginForm = (props) => {
                 'email': email,
                 'password': password
             }).then( data => {
-                if( data && data.token && data.token !== '' ) {
-                    // setUserToken( data.token );
-                    sessionStorage.setItem( 'token', data.token );
-                    history.push("/");
+                // console.log( data );
+                if( data ) {
+                    if( data.token && data.token !== '' ) {
+                        sessionStorage.setItem( 'token', data.token );
+                        history.push("/");
+                    } else if ( data.non_field_errors ) {
+                        props.onIncorrectCredentialsError( true );
+                    }
+                } else {
+                    props.onServerConnectionError( true );
+                }
+            }, error => {
+                if( error ) {
+                    console.log( error );
+                    props.onServerConnectionError( true );
                 }
             });
         } else {
-            return props.onError( true );
+            props.onEmptyFieldsError( true );
         }        
     }
 
-    const handleClick = () => props.onError( false );
+    const handleClick = () => {
+        props.onEmptyFieldsError( false );
+        props.onServerConnectionError( false );
+        props.onIncorrectCredentialsError( false );
+    }
 
     const handleEmailChange = ( event ) => setEmail( event.target.value );
 

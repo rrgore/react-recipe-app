@@ -2,9 +2,12 @@ import React, {
     useState, 
     useEffect,
  } from 'react';
+import { List } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+
 
 import { API_URL } from '../utils/ServerUtils';
-import IngredientItem from './IngredientItem';
+// import IngredientItem from './IngredientItem';
 
 
 const API_GET_INGREDIENTS_URL = `${API_URL}/api/recipe/ingredients`;
@@ -44,11 +47,19 @@ const IngredientsPage = ( props ) => {
     return (
         <div>
             <h1>Ingredients Page</h1>
-            {
-                ingredientsList.length > 0 ? ingredientsList.map( ingredient => (
-                    <IngredientItem ingredientData={ingredient} key={ingredient.id} />
-                )) : null
-            }
+            <Link to='/'>Go to Home Page</Link>
+            <List animated>
+                {
+                    ingredientsList.length > 0 ? ingredientsList.map( ingredient => (
+                        <List.Item key={ingredient.id}>
+                            <List.Content>
+                                <List.Header>{ingredient.name}</List.Header>
+                            </List.Content>
+                        </List.Item>
+                    )): null
+                }
+            </List>
+            
         </div>
     );
 }
