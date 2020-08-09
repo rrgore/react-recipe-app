@@ -6,14 +6,12 @@ import {
 const PreLoginMsg = () => (
     <div>
         <Message 
-            id="preLoginString" 
-            className="preLoginString" 
-            name="preLoginString"    
+            id="preLoginMsg" 
+            className="preLoginMsg" 
+            name="preLoginMsg"
         >
             <Message.Header>Welcome to Recipe App</Message.Header>
-            <p 
-                
-            >Login to add and see your recipes, along with the ingredients and tags</p>
+            <p>Login to add and see your recipes, along with the ingredients and tags</p>
         </Message>        
     </div>
 );
