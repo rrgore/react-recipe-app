@@ -45,7 +45,11 @@ const TagsPage = ( props ) => {
 
     return (
         <div>
-            <h1>Tags Page</h1>
+            <h1
+                id="tagsPageTitle"
+                name="tagsPageTitle"
+                className="tagsPageTitle"
+            >Tags Page</h1>
             <Link to='/'>Go to Home Page</Link>
             <List animated>
                 {

@@ -44,7 +44,11 @@ const RecipesPage = ( props ) => {
 
     return (
         <div>
-            <h1>Recipes Page</h1>
+            <h1
+                id="recipesPageTitle"
+                name="recipesPageTitle"
+                className="recipesPageTitle"
+            >Recipes Page</h1>
             <Link to='/'>Go to Home Page</Link>
             <List animated>
                 {

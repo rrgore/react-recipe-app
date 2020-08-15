@@ -36,6 +36,7 @@ describe('HomePage testing - common', () => {
     });
 });
 
+
 describe(`Home Page testing - without login`, () => {
     it(`Should show Pre Login Message`, () => {
         const wrapper = mount(
@@ -101,5 +102,108 @@ describe(`Home Page testing - without login`, () => {
             .length
         ).toBe(0);
         wrapper.unmount();
+    });
+});
+
+// This needs to be fixed :(
+xdescribe(`Home Page testing after login`, () => {
+    beforeAll(() => {
+        sessionStorage.setItem('token', '12345');        
+    });
+
+    it(`Account Panel should show User Profile and Logout`, () => {
+        const spyUseEffect = jest.spyOn( React, 'useEffect' );
+        let wrapper = mount(
+            <Router>
+                <HomePage/>
+            </Router>
+        );
+        // const wrapper = mount(
+        //     <Router>
+        //         <HomePage/>
+        //     </Router>
+        // );
+        
+        // console.log( sessionStorage.getItem('token') );
+        expect( spyUseEffect ).toHaveBeenCalled();
+
+        // expect(wrapper
+        //         .find(AccountPanel)
+        //         .find('#profile')
+        //         .length
+        //     ).toBeGreaterThan(0);
+        // expect(wrapper
+        //         .find(AccountPanel)
+        //         .find('#logout')
+        //         .length
+        //     ).toBeGreaterThan(0);
+        wrapper.unmount();
+    });
+
+    it(`Account Panel should not show Sign Up and Login`, () => {
+        it(`Account Panel should not show User Profile and Logout`, () => {
+            const wrapper = mount(
+                <Router>
+                    <HomePage />
+                </Router>
+            );
+            expect(wrapper
+                .find(AccountPanel)
+                .find('#login')
+                .length
+            ).toBe(0);
+            expect(wrapper
+                .find(AccountPanel)
+                .find('#signUp')
+                .length
+            ).toBe(0);
+            wrapper.unmount();
+        });
+    });
+
+    it(`Content Panel should be visible.`, ()=>{
+        const wrapper = mount(
+            <Router>
+                <HomePage />
+            </Router>
+        );
+        expect(wrapper.find(ContentPanel)).toHaveLength(1);
+        wrapper.unmount();
+    });
+
+    it(`Content Panel should show 3 links - Recipes, Tags and Ingredients`, () => {
+        const wrapper = mount(
+            <Router>
+                <HomePage />
+            </Router>
+        );
+        // console.log( wrapper.find(AccountPanel).debug() );
+        expect(wrapper.find(ContentPanel)
+                .find('#recipesLink')
+                .length
+            ).toBeGreaterThan(0);
+        expect(wrapper.find(ContentPanel)
+                .find('#tagsLink')
+                .length
+            ).toBeGreaterThan(0);
+        expect(wrapper.find(ContentPanel)
+                .find('#ingredientsLink')
+                .length
+            ).toBeGreaterThan(0);
+        wrapper.unmount();
+    });
+
+    it(`Pre-login msg should not be visible`, () => {
+        const wrapper = mount(
+            <Router>
+                <HomePage />
+            </Router>
+        );
+        // console.log( wrapper.find(PreLoginMsg).closest('p') );
+        expect(wrapper.find('#preLoginMsg')).toHaveLength(0);
+    });
+
+    afterAll(() => {
+        sessionStorage.clear();
     });
 });
